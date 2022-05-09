@@ -1,0 +1,19 @@
+declare variables
+set round to 1
+check whether round is equal to 5
+    if no
+        ask input human
+        generate input pc
+        check whether human>pc
+            if yes
+                document counter for wins
+            else
+                document counter for losses
+        update counter for rounds (add a plus round to previous)
+    else
+        compare wins to losses
+            if wins>losses 
+                print you wins
+            else
+                print you lose
+        ask to play again, if clicked set counter back to 1
