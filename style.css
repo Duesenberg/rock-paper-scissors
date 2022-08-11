@@ -1,22 +1,24 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: navy;
+  background-color: rgb(48, 99, 156);
   color: white;
   text-align: center;
   margin: 0;
 }
 
 .heading {
-  font-size: 36px;
+  font-size: 48px;
   font-weight: 600;
   padding: 12px;
   background-color: rgb(48, 99, 156);
+  border-top: 5px solid rgb(85, 153, 231);
+  border-bottom: 5px solid rgb(85, 153, 231);
 }
 
 .text-pick {
-  padding: 50px;
+  padding: 25px;
   background-color: rgb(37, 76, 121);
-  font-size: 20px;
+  font-size: 36px;
   font-weight: 400;
 }
 
@@ -24,19 +26,34 @@
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
-  justify-content: center;
-  gap: 150px;
-  padding: 0px 200px;
+  justify-content: space-evenly;
+  padding: 10px 0px;
   background-color: rgb(37, 76, 121);
+  border-bottom: 5px solid rgb(85, 153, 231);
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  gap: 5px;
+  background-color: rgb(37, 76, 121);
 }
 
 img {
-  width: 100%;
+  width: 100px;
   height: auto;
+  border-radius: 20px;
+}
+
+button {
+  border-radius: 20px;
+  background-color: white;
+  padding: 0;
+  border: 3px solid rgb(85, 153, 231);
+}
+
+.text {
+  background-color: rgb(37, 76, 121);
+  font-size: 24px;
+  font-weight: 500;
 }
