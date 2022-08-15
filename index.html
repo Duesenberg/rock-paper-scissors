@@ -3,7 +3,7 @@
     <head>
         <title>Rock, Paper, Scissors</title>
         <meta charset="utf-8">
-        <!-- <script src="./script.js"></script> -->
+        <script src="./script.js" defer></script>
         <link rel="stylesheet" href="./style.css">
     </head>
     <body>
@@ -12,26 +12,30 @@
             <div class="text-pick">Take your pick:</div>
             <div class="choices">
                 <div class="card rockCard">
-                    <button class="button-rock">
+                    <button class="button-choice" id="rock">
                         <img class="image" src="./images/rock.png" alt="rock">
                     </button>
                     <div class="text">Rock</div>
                 </div>
                 <div class="card paperCard">
-                    <button class="button-paper">
+                    <button class="button-choice" id="paper">
                         <img class="image" src="./images/paper.png" alt="paper">
                     </button>
                     <div class="text">Paper</div>
                 </div>
                 <div class="card scissorsCard">
-                    <button class="button-scissors">
+                    <button class="button-choice" id="scissors">
                         <img class="image" src="./images/scissors.png" alt="scissors">
                     </button>
                     <div class="text">Scissors</div>
                 </div>
             </div>
-            <div class="round-result"></div>
-            <div class="result"></div>
+            <div class="round-result">
+                <div class="res"></div>
+            </div>
+            <div class="result">
+                <div class="score-count"></div>
+            </div>
     
         </div>
     </body>

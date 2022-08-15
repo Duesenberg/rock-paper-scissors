@@ -1,77 +1,127 @@
 let winCount = 0;
 let loseCount = 0;
+let tieCount = 0;
+let resultCount;
 let nonValidInput = 0;
 let computerSelection;
-let playerSelection;
+let backgrdColor;
 
 //function for random computer selection
 function computerPlay() {
     let outputs = ["rock", "paper", "scissors"];
-    computerSelection = outputs [Math.floor(Math.random()* outputs.length)];
+    return computerSelection = outputs [Math.floor(Math.random()* outputs.length)];
 }
 
 //function for playing one round
-function playRound(playerSelection, computerSelection) {
-    playerSel = playerSelection.toLowerCase();
+function playRound(playerSelection) {
+    computerPlay ();
     if ((playerSelection === "scissors") && (computerSelection === "paper")) {
-        result = `Computer chooses Paper.\n\nYou win! Scissors beats Paper.`;
+        result = `Computer chooses Paper, You win!`;
         winCount += 1;
-    } else if ((playerSel === "rock") && (computerSelection === "paper")) {
-        result = `Computer chooses Paper.\n\nYou lose! Paper beats Rock.`;
+        return result;
+    } else if ((playerSelection === "rock") && (computerSelection === "paper")) {
+        result = `Computer chooses Paper, You lose!`;
         loseCount += 1;
-    } else if ((playerSel === "rock") && (computerSelection === "scissors")) {
-        result = `Computer chooses Scissors.\n\nYou win! Rock beats Scissors.`;
+        return result;
+    } else if ((playerSelection === "rock") && (computerSelection === "scissors")) {
+        result = `Computer chooses Scissors, You win!`;
         winCount += 1;
-    } else if ((playerSel === "paper") && (computerSelection === "scissors")) {
-        result = `Computer chooses Scissors.\n\nYou lose! Scissors beats Paper.`;
+        return result;
+    } else if ((playerSelection === "paper") && (computerSelection === "scissors")) {
+        result = `Computer chooses Scissors, You lose!`;
         loseCount += 1;
-    } else if ((playerSel === "paper") && (computerSelection === "rock")) {
-        result = `Computer chooses Rock.\n\nYou win! Paper beats Rock.`;
+        return result;
+    } else if ((playerSelection === "paper") && (computerSelection === "rock")) {
+        result = `Computer chooses Rock, You win!`;
         winCount += 1;
-    } else if ((playerSel === "scissors") && (computerSelection === "rock")) {
-        result = `Computer chooses Rock.\n\nYou lose! Rock beats Scissors.`;
+        return result;
+    } else if ((playerSelection === "scissors") && (computerSelection === "rock")) {
+        result = `Computer chooses Rock, You lose!`;
         loseCount += 1;
-    } else if (playerSel === computerSelection) {
-        selection = playerSel.slice(0,1).toUpperCase() + playerSel.slice(1);
+        return result;
+    } else {
+        selection = playerSelection.slice(0,1).toUpperCase() + playerSelection.slice(1);
         result = (`Tie! You both chose ${selection}.`);
-    } else {
-        result = (`Invalid input. Please choose either Rock, Paper or Scissors.`);
-        nonValidInput += 1;
+        tieCount += 1;
+        return result;
     }
 }
 
-//function for playing the whole game
-function game() {
-    for (i=0; i < 5; i++) {
-        playerSelection = prompt('Type Rock, Paper or Scissors:');
-        computerPlay();
-        playRound(playerSelection, computerSelection);
-        alert(result);
-    }
-    alert(`Result: Win: ${winCount} Lose: ${loseCount} Invalid inputs: ${nonValidInput}`);
-    if (winCount > loseCount) {
-        alert('You Win!');
-    } else if (winCount === loseCount) {
-        alert ('Tie!');
+//function for string showing score and game result
+function scoreCounter (winCount, loseCount, tieCount) {
+    let backgrdColor;
+    if ((winCount + loseCount + tieCount) < 5) {
+        //while game is playing
+        resultCount = `Wins: ${winCount} Losses: ${loseCount} Ties: ${tieCount}`;
+        return resultCount;
     } else {
-        alert ('You Lose!');
-    }
-    winCount = 0;
-    loseCount = 0;
-    if (confirm('Want to play again?') === true) {
-        game ();
-    } else {
-        alert ("Game Over!");
+        //when 5 rounds finish
+        if (winCount > loseCount) return resultCount = "You Win!";
+        else if (winCount < loseCount) return resultCount = "You Lose!";
+        else return resultCount = "Tie!";
     }
 }
 
-//function that brings up prompt for playing game
-function wantToPlay() {
-    if (confirm('Want to play Rock, Paper, Scissors?') === true) {
-        game ();
-    } else {
-        alert ("Wimp!");
-    }
-}
+//listener for player selection, displaying results
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id);
+        scoreCounter (winCount, loseCount, tieCount);
+        if ((winCount + loseCount + tieCount) < 5) {
+            //while game is playing
 
-wantToPlay();
+            //displaying result from current round
+            const roundResult = document.querySelector('.round-result');
+            const res = document.querySelector('.res');
+            roundResult.removeChild(res); //remove prev. div so they don't stack
+            res.textContent = result;
+            //styling of div
+            res.style.padding = '10px';
+            res.style.fontSize = '18px';
+            res.style.fontWeight = '500';
+            res.style.borderBottom = '2px';
+            res.style.borderBottomColor = '#5599e7';
+            res.style.borderBottomStyle = 'solid';
+            roundResult.appendChild(res); //insert div with current round result
+            
+            //score counter
+            const scrCounter = document.querySelector('.result');
+            const scrCount = document.querySelector('.score-count');
+            scrCounter.removeChild(scrCount);
+            scrCount.textContent = resultCount;
+            scrCount.style.padding = '10px';
+            scrCount.style.fontSize = '24px';
+            scrCount.style.fontWeight = '500';
+            scrCount.style.borderBottom = '5px';
+            scrCount.style.borderBottomColor = '#5599e7';
+            scrCount.style.borderBottomStyle = 'solid';
+            scrCounter.appendChild(scrCount);   
+        } else {
+            //after 5 rounds
+
+            //displaying result from current round
+            const roundResult = document.querySelector('.round-result');
+            const res = document.querySelector('.res');
+            roundResult.removeChild(res);
+            res.textContent = result;
+            res.style.padding = '10px';
+            res.style.fontSize = '18px';
+            res.style.fontWeight = '500';
+            res.style.borderBottom = '2px';
+            res.style.borderBottomColor = '#5599e7';
+            res.style.borderBottomStyle = 'solid';
+            roundResult.appendChild(res);
+
+            //display final result
+            const scrCounter = document.querySelector('.result');
+            const scrCount = document.querySelector('.score-count');
+            scrCounter.removeChild(scrCount);
+            scrCount.textContent = resultCount;
+            scrCount.style.padding = '10px';
+            scrCount.style.fontSize = '42px';
+            scrCount.style.fontWeight = '700';
+            scrCounter.appendChild(scrCount);
+        }
+    })
+})
