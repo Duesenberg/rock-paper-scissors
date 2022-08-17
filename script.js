@@ -2,9 +2,7 @@ let winCount = 0;
 let loseCount = 0;
 let tieCount = 0;
 let resultCount;
-let nonValidInput = 0;
 let computerSelection;
-let backgrdColor;
 
 //function for random computer selection
 function computerPlay() {
@@ -66,6 +64,7 @@ function scoreCounter (winCount, loseCount, tieCount) {
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
+        button.classList.add('button-pressed'); //adding button-pressed class
         playRound(button.id);
         scoreCounter (winCount, loseCount, tieCount);
         if ((winCount + loseCount + tieCount) < 5) {
@@ -74,54 +73,49 @@ buttons.forEach((button) => {
             //displaying result from current round
             const roundResult = document.querySelector('.round-result');
             const res = document.querySelector('.res');
-            roundResult.removeChild(res); //remove prev. div so they don't stack
             res.textContent = result;
-            //styling of div
-            res.style.padding = '10px';
-            res.style.fontSize = '18px';
-            res.style.fontWeight = '500';
+            //adding border
             res.style.borderBottom = '2px';
             res.style.borderBottomColor = '#5599e7';
             res.style.borderBottomStyle = 'solid';
-            roundResult.appendChild(res); //insert div with current round result
             
             //score counter
             const scrCounter = document.querySelector('.result');
             const scrCount = document.querySelector('.score-count');
-            scrCounter.removeChild(scrCount);
             scrCount.textContent = resultCount;
-            scrCount.style.padding = '10px';
-            scrCount.style.fontSize = '24px';
-            scrCount.style.fontWeight = '500';
             scrCount.style.borderBottom = '5px';
             scrCount.style.borderBottomColor = '#5599e7';
             scrCount.style.borderBottomStyle = 'solid';
-            scrCounter.appendChild(scrCount);   
-        } else {
-            //after 5 rounds
+        } else if ((winCount + loseCount + tieCount) == 5) {
+            //at fifth round
 
             //displaying result from current round
             const roundResult = document.querySelector('.round-result');
             const res = document.querySelector('.res');
-            roundResult.removeChild(res);
             res.textContent = result;
-            res.style.padding = '10px';
             res.style.fontSize = '18px';
-            res.style.fontWeight = '500';
-            res.style.borderBottom = '2px';
-            res.style.borderBottomColor = '#5599e7';
-            res.style.borderBottomStyle = 'solid';
-            roundResult.appendChild(res);
 
             //display final result
             const scrCounter = document.querySelector('.result');
             const scrCount = document.querySelector('.score-count');
-            scrCounter.removeChild(scrCount);
             scrCount.textContent = resultCount;
-            scrCount.style.padding = '10px';
             scrCount.style.fontSize = '42px';
             scrCount.style.fontWeight = '700';
-            scrCounter.appendChild(scrCount);
+            if (winCount>loseCount) scrCount.style.backgroundColor = 'green';
+            else if (winCount<loseCount) scrCount.style.backgroundColor = 'red';
+        } else {
+            const roundResult = document.querySelector('.round-result');
+            const res = document.querySelector('.res');
+            res.textContent = "Game Finished. Press Restart to play again.";
         }
     })
 })
+
+//function for removing button-pressed class
+function removeTransition(e) {
+    if (e.propertyName != 'transform') return;
+    this.classList.remove('button-pressed');
+}
+
+//removing button-pressed class after transition end
+buttons.forEach((button) => button.addEventListener('transitionend', removeTransition));
